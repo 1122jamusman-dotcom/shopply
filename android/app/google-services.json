@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "166225428289",
+    "project_id": "shoply-d2e48",
+    "storage_bucket": "shoply-d2e48.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166225428289:android:d2dfbc2cc1b3cb2f10ebc0",
+        "android_client_info": {
+          "package_name": "com.example.shoply"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLUKPf5Gktj9-OERKeSzHqHdes489YyWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
