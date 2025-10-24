@@ -13,6 +13,7 @@ class DetailScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppBar(),
               Center(child: Image.asset(AppImages.book_5)),
@@ -34,7 +35,7 @@ class DetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.only(right: 180),
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   'About The Author',
                   style: theme.textTheme.bodyLarge!.copyWith(
@@ -52,7 +53,7 @@ class DetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.only(right: 250),
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   'Overview',
                   style: theme.textTheme.bodyLarge!.copyWith(

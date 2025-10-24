@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoply/utils/app_colors.dart';
 import 'package:shoply/utils/app_images.dart';
 
@@ -50,52 +51,43 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                istap = !istap;
+              });
+            },
+            child: Icon(
+              Icons.bookmark,
+              color: istap == true ? AppColors.ornage : AppColors.textSecondary,
+            ),
+          ),
+        ),
+
+        actions: [
+          Switch(
+            value: isSwitched,
+            onChanged: (value) {
+              setState(() {
+                isSwitched = value;
+              });
+            },
+          ),
+          SizedBox(width: 10.w),
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: AssetImage(AppImages.profilePhoto),
+          ),
+          SizedBox(width: 10.w),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        istap = !istap;
-                      });
-                    },
-                    child: Icon(
-                      Icons.bookmark,
-                      color: istap == true
-                          ? AppColors.ornage
-                          : AppColors.textSecondary,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 200),
-
-                /// Switch button 🙄
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(width: 10),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage(AppImages.profilePhoto),
-                  ),
-                ),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 30),
               child: Text(
@@ -185,30 +177,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) {
-                      return Expanded(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.asset(data[index]['image']),
-                              ),
+                      return Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(data[index]['image']),
+                            ),
 
-                              Text(
-                                data[index]['bookname'],
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            Text(
+                              data[index]['bookname'],
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 70),
-                                child: Text(
-                                  data[index]['writerName'],
-                                  style: theme.textTheme.bodyMedium,
-                                ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 70),
+                              child: Text(
+                                data[index]['writerName'],
+                                style: theme.textTheme.bodyMedium,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       );
                     },
