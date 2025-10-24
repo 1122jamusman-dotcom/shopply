@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoply/utils/theme_data.dart';
-import 'package:shoply/view/auth_view/favourites_screen.dart';
-import 'package:shoply/view/auth_view/peofile_screen.dart';
-import 'package:shoply/view/upload_category.dart';
-import 'package:shoply/view/uploads_books.dart';
-import 'package:shoply/widgats/textfaom_widgets.dart';
+import 'package:shoply/view/auth_view/forgot_password_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,11 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      home: ProfileScreen(),
+    return ScreenUtilInit(
+      designSize: Size(428, 923),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.system,
+          home: ForgotPasswordScreen(),
+        );
+      },
     );
   }
 }
