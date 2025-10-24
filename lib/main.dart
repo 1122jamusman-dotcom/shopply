@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoply/utils/theme_data.dart';
 import 'package:shoply/view/user_view/detail_screen.dart';
 import 'package:shoply/view/user_view/home_screen.dart';
+import 'package:shoply/view/auth_view/forgot_password_screen.dart';
 
 void main() {
   runApp(const MyApp());
