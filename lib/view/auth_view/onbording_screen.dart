@@ -1,21 +1,20 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:shoply/utils/app_colors.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shoply/utils/app_images.dart';
-import 'package:shoply/widget/butten_widget.dart';
+import 'package:shoply/view/auth_view/login_screen.dart';
+import 'package:shoply/widgets/button_component.dart';
 
 class OnbordingScreen extends StatefulWidget {
   OnbordingScreen({super.key});
-
   @override
   State<OnbordingScreen> createState() => _OnbordingScreenState();
 }
 
 class _OnbordingScreenState extends State<OnbordingScreen> {
   final PageController _controller = PageController();
-
   int _Currentpage = 0;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -29,6 +28,8 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               onPageChanged: (index) {
                 setState(() {
                   _Currentpage = index;
+                  print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+                  print(index);
                 });
               },
               children: [
@@ -55,7 +56,6 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
           DotsIndicator(
             dotsCount: 3,
             position: _Currentpage.toDouble(),
-
             decorator: const DotsDecorator(
               activeColor: Color.fromARGB(
                 255,
@@ -94,7 +94,20 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
           SizedBox(height: 100),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ButtenWidget(hinttext: 'Continue', onTap: () {}),
+            child: ButtonComponent(
+              hinttext: _Currentpage < 2 ? 'Continue' : 'Get Started',
+              ontap: () {
+                if (_Currentpage < 2) {
+                  _controller.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                } else if (_Currentpage == 2) {
+                  Get.to(LoginScreen());
+                  print('3 ');
+                }
+              },
+            ),
           ),
         ],
       ),

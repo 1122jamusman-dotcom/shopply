@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shoply/utils/app_colors.dart';
-import 'package:shoply/widget/butten_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shoply/controller/auth_controller.dart';
 
+import 'package:shoply/widgets/button_component.dart';
+import 'package:shoply/widgets/textformfield_component.dart';
+
+// ignore: must_be_immutable
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({super.key});
+  TextEditingController emailController = TextEditingController();
+  AuthController authController = AuthController();
+  ForgotPasswordScreen({super.key});
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -15,54 +21,33 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 13),
+        padding: EdgeInsets.symmetric(horizontal: 13.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10, top: 50),
+              padding: EdgeInsets.only(left: 10.w, top: 50.h),
               child: Text(
                 'Forgot Password',
                 style: theme.textTheme.displayMedium,
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(left: 10.h),
               child: Text(
                 'Forgot your password? Reset it and get back to exploring your bookshelf in seconds.',
               ),
             ),
             SizedBox(height: 20),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Email',
-                hintStyle: TextStyle(color: Colors.grey),
-                focusColor: AppColors.textSecondary,
-                prefixIcon: const Icon(Icons.email, color: Colors.grey),
-                filled: true,
-                fillColor: AppColors.cardBackground,
-
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
+            TextformFieldComponent(
+              hintText: 'Email',
+              controller: widget.emailController,
+              prefixIcon: Icons.email_outlined,
             ),
-
-            SizedBox(height: 20),
-            ButtenWidget(hinttext: ' Forgot', onTap: () {}),
+            SizedBox(height: 20.h),
+            ButtonComponent(hinttext: 'Forgot', ontap: () {}),
           ],
         ),
       ),

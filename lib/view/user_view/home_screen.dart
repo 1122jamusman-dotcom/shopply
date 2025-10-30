@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 import 'package:shoply/utils/app_colors.dart';
 import 'package:shoply/utils/app_images.dart';
+import 'package:shoply/view/auth_view/favourites_screen.dart';
+import 'package:shoply/view/upload_category.dart';
+import 'package:shoply/view/uploads_books.dart';
+import 'package:shoply/view/user_view/detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  bool istap = false;
   List data = [
     {
       'image': AppImages.book_1,
@@ -30,6 +35,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     },
     {
       'image': AppImages.book_4,
+      'bookname': 'Catcher in the Rye',
+      'writerName': 'J.D. Salinger',
+    },
+
+    {
+      'image': AppImages.book_5,
+      'bookname': 'Catcher in the Rye',
+      'writerName': 'J.D. Salinger',
+    },
+
+    {
+      'image': AppImages.book_6,
       'bookname': 'Catcher in the Rye',
       'writerName': 'J.D. Salinger',
     },
@@ -52,17 +69,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: theme.colorScheme.primaryContainer,
         title: Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: EdgeInsets.only(left: 10.w),
           child: GestureDetector(
             onTap: () {
-              setState(() {
-                istap = !istap;
-              });
+              Get.off(FavouritesScreen());
             },
             child: Icon(
               Icons.bookmark,
-              color: istap == true ? AppColors.ornage : AppColors.textSecondary,
+              color: theme.colorScheme.secondaryContainer,
             ),
           ),
         ),
@@ -85,149 +101,180 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10, top: 30),
-              child: Text(
-                'Welcome Back, Bunny!',
-                style: theme.textTheme.bodyMedium,
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'What do you want to \nread today?',
-                style: theme.textTheme.displayMedium!.copyWith(
-                  fontWeight: FontWeight.w100,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 30.w, top: 30.h),
+                child: Text(
+                  'Welcome Back, Bunny!',
+                  style: theme.textTheme.bodyLarge,
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.withValues(alpha: 0.3),
-                  hintText: 'Search',
-                  hintStyle: theme.textTheme.bodyMedium!.copyWith(fontSize: 16),
 
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                  suffixIcon: const Icon(Icons.mic, color: Colors.grey),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
+              Padding(
+                padding: EdgeInsets.only(left: 30.w),
+                child: Text(
+                  'What do you want to \nread today?',
+                  style: theme.textTheme.headlineLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 35),
-
-            /// here is the tapbar 😋
-            TabBar(
-              labelColor: Colors.black,
-              indicatorColor: AppColors.ornage,
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
-              unselectedLabelColor: Colors.grey,
-              controller: tabController,
-              tabs: [
-                Text('Novel', overflow: TextOverflow.ellipsis),
-                Text('Self-love', overflow: TextOverflow.ellipsis),
-                Text('Science', overflow: TextOverflow.ellipsis),
-                Text('Romance', overflow: TextOverflow.ellipsis),
-              ],
-            ),
-            SizedBox(height: 15),
-            GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.ornage,
-                  ),
-                  child: Icon(Icons.add, color: AppColors.background, size: 30),
-                ),
-              ),
-            ),
-            SizedBox(height: 15),
-
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  GridView.builder(
-                    itemCount: data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.57,
-                      crossAxisCount: 2,
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.withValues(alpha: 0.3),
+                    hintText: 'Search',
+                    hintStyle: theme.textTheme.bodyMedium!.copyWith(
+                      fontSize: 16.sp,
                     ),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(data[index]['image']),
-                            ),
 
-                            Text(
-                              data[index]['bookname'],
-                              style: theme.textTheme.bodyLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 70),
-                              child: Text(
-                                data[index]['writerName'],
-                                style: theme.textTheme.bodyMedium,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    suffixIcon: const Icon(Icons.mic, color: Colors.grey),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  Center(
-                    child: Text('Self-love', style: theme.textTheme.labelLarge),
-                  ),
-                  Center(
-                    child: Text('Science', style: theme.textTheme.labelLarge),
-                  ),
-                  Center(
-                    child: Text('Romance', style: theme.textTheme.labelLarge),
-                  ),
+                ),
+              ),
+              SizedBox(height: 35.h),
+
+              /// here is the tapbar 😋
+              TabBar(
+                labelColor: Colors.black,
+                indicatorColor: AppColors.ornage,
+                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                unselectedLabelColor: Colors.grey,
+                controller: tabController,
+                tabs: [
+                  Text('Novel', overflow: TextOverflow.ellipsis),
+                  Text('Self-love', overflow: TextOverflow.ellipsis),
+                  Text('Science', overflow: TextOverflow.ellipsis),
+                  Text('Romance', overflow: TextOverflow.ellipsis),
                 ],
               ),
-            ),
-          ],
+              SizedBox(height: 15.h),
+              GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.off(UploadCategory());
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: theme.colorScheme.secondaryContainer,
+                      child: Icon(
+                        Icons.add,
+                        color: theme.colorScheme.primaryContainer,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15.h),
+
+              SizedBox(
+                height: 600.h,
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 0.57,
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () => Get.to(
+                            () => DetailScreen(),
+                            arguments: {
+                              'bookname': data[index]['bookname'],
+                              'image': data[index]['image'],
+                              'writername': data[index]['writerName'],
+                            },
+                          ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Image.network(
+                                  data[index]['image'],
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(Icons.broken_image_outlined);
+                                  },
+                                ),
+                              ),
+
+                              Text(
+                                data[index]['bookname'],
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 70.w),
+                                child: Text(
+                                  data[index]['writerName'],
+                                  style: theme.textTheme.bodyMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    Center(
+                      child: Text(
+                        'Self-love',
+                        style: theme.textTheme.labelLarge,
+                      ),
+                    ),
+                    Center(
+                      child: Text('Science', style: theme.textTheme.labelLarge),
+                    ),
+                    Center(
+                      child: Text('Romance', style: theme.textTheme.labelLarge),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Align(
         alignment: AlignmentGeometry.bottomRight,
-        child: Container(
-          height: 70,
-          width: 70,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.redAccent,
+        child: GestureDetector(
+          onTap: () {
+            Get.off(UploadsBooks());
+          },
+          child: Container(
+            height: 70.h,
+            width: 70.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.redAccent,
+            ),
+            child: Icon(Icons.add, size: 60.h, color: Colors.white),
           ),
-          child: Icon(Icons.add, size: 70, color: Colors.white),
         ),
       ),
     );
