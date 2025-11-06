@@ -1,9 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shoply/utils/theme_data.dart';
-import 'package:shoply/view/auth_view/forgot_password_screen.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:shoply/firebase_options.dart';
+import 'package:shoply/utils/dark_theme.dart';
+import 'package:shoply/utils/light_theme.dart';
+import 'package:shoply/view/auth_view/singup_screen.dart';
+import 'package:shoply/view/user_view/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -17,12 +25,13 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp(
+        return GetMaterialApp(
+          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
+          theme: lightTheme,
+          darkTheme: darkTheme,
           themeMode: ThemeMode.system,
-          home: ForgotPasswordScreen(),
+          home: SingUpScreen(),
         );
       },
     );

@@ -1,7 +1,17 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shoply/utils/app_colors.dart';
+import 'package:get/get.dart';
+import 'package:shoply/controllar/ui_controller/switch_button_controller.dart';
+
 import 'package:shoply/utils/app_images.dart';
+import 'package:shoply/view/user_view/profile_Screen.dart';
+import 'package:shoply/view/auth_view/favourites_screen.dart';
+import 'package:shoply/view/upload_category.dart';
+import 'package:shoply/view/uploads_books.dart';
+import 'package:shoply/view/user_view/detail_screen.dart';
+import 'package:shoply/widget/text_formfield_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,37 +21,47 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  bool istap = false;
+  TextEditingController searchController = TextEditingController();
+
+  // --- Dummy Book Data ---
   List data = [
     {
       'image': AppImages.book_1,
-      'bookname': 'Catcher in the Rye',
-      'writerName': 'J.D. Salinger',
+      'bookname': 'HUNGRY WOLVES',
+      'writerName': 'TARA WEST',
+      'category': 'Novel',
     },
     {
       'image': AppImages.book_2,
-      'bookname': 'Someone Like You',
-      'writerName': 'Roald Dahl',
+      'bookname': 'THE FINAL PATROL',
+      'writerName': 'Jhon T. AIdaco',
+      'category': 'Self-love',
     },
     {
       'image': AppImages.book_3,
-      'bookname': 'Catcher in the Rye',
-      'writerName': 'J.D. Salinger',
+      'bookname': 'BOUND IN TNKED FLAME',
+      'writerName': 'AVA LARKSEN',
+      'category': 'Science',
     },
     {
       'image': AppImages.book_4,
-      'bookname': 'Catcher in the Rye',
-      'writerName': 'J.D. Salinger',
+      'bookname': 'SECRETS OF THE DHAMPIR',
+      'writerName': 'RENEE JOINER',
+      'category': 'Romance',
+    },
+    {
+      'image': AppImages.book_5,
+      'bookname': 'Harry Potter',
+      'writerName': 'J. K.ROWLING',
+      'category': 'Novel',
     },
   ];
 
   late TabController tabController;
-
-  bool isSwitched = false;
+  final switchButtonController = Get.put(SwitchButtonController());
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tabController = TabController(length: 4, vsync: this);
   }
@@ -52,184 +72,219 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: theme.colorScheme.primaryContainer,
         title: Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: EdgeInsets.only(left: 10.w),
           child: GestureDetector(
             onTap: () {
-              setState(() {
-                istap = !istap;
-              });
+              Get.to(FavouritesScreen());
             },
             child: Icon(
               Icons.bookmark,
-              color: istap == true ? AppColors.ornage : AppColors.textSecondary,
+              color: theme.colorScheme.secondaryContainer,
             ),
           ),
         ),
-
         actions: [
-          Switch(
-            value: isSwitched,
-            onChanged: (value) {
-              setState(() {
-                isSwitched = value;
-              });
-            },
-          ),
+          Obx(() {
+            return Switch(
+              value: switchButtonController.isEnabled.value,
+              onChanged: (value) {
+                switchButtonController.swipeSwitch(value);
+              },
+            );
+          }),
           SizedBox(width: 10.w),
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(AppImages.profilePhoto),
+          GestureDetector(
+            onTap: () {
+              Get.to(ProfileScreen());
+            },
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: AssetImage(AppImages.profilePhoto),
+            ),
           ),
           SizedBox(width: 10.w),
         ],
       ),
+
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10, top: 30),
-              child: Text(
-                'Welcome Back, Bunny!',
-                style: theme.textTheme.bodyMedium,
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'What do you want to \nread today?',
-                style: theme.textTheme.displayMedium!.copyWith(
-                  fontWeight: FontWeight.w100,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // --- Greeting Section ---
+              Padding(
+                padding: EdgeInsets.only(left: 30.w, top: 30.h),
+                child: Text(
+                  'Welcome Back, Bunny!',
+                  style: theme.textTheme.bodyLarge,
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.withValues(alpha: 0.3),
+              Padding(
+                padding: EdgeInsets.only(left: 30.w),
+                child: Text(
+                  'What do you want to \nread today?',
+                  style: theme.textTheme.headlineLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20.h),
+
+              // --- Search Bar ---
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: TextFormfieldWidget(
+                  controllar: searchController,
                   hintText: 'Search',
-                  hintStyle: theme.textTheme.bodyMedium!.copyWith(fontSize: 16),
-
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                  suffixIcon: const Icon(Icons.mic, color: Colors.grey),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  prefixIcon: Icons.search,
+                  suffixIcon: Icons.mic_rounded,
                 ),
               ),
-            ),
-            SizedBox(height: 35),
+              SizedBox(height: 35.h),
 
-            /// here is the tapbar 😋
-            TabBar(
-              labelColor: Colors.black,
-              indicatorColor: AppColors.ornage,
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
-              unselectedLabelColor: Colors.grey,
-              controller: tabController,
-              tabs: [
-                Text('Novel', overflow: TextOverflow.ellipsis),
-                Text('Self-love', overflow: TextOverflow.ellipsis),
-                Text('Science', overflow: TextOverflow.ellipsis),
-                Text('Romance', overflow: TextOverflow.ellipsis),
-              ],
-            ),
-            SizedBox(height: 15),
-            GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.ornage,
-                  ),
-                  child: Icon(Icons.add, color: AppColors.background, size: 30),
-                ),
-              ),
-            ),
-            SizedBox(height: 15),
-
-            Expanded(
-              child: TabBarView(
+              // --- Tab Bar ---
+              TabBar(
+                tabAlignment: TabAlignment.start,
+                labelColor: theme.colorScheme.primary,
+                indicatorColor: theme.colorScheme.secondaryContainer,
+                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                unselectedLabelColor: Colors.grey,
                 controller: tabController,
-                children: [
-                  GridView.builder(
-                    itemCount: data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.57,
-                      crossAxisCount: 2,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(data[index]['image']),
-                            ),
-
-                            Text(
-                              data[index]['bookname'],
-                              style: theme.textTheme.bodyLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 70),
-                              child: Text(
-                                data[index]['writerName'],
-                                style: theme.textTheme.bodyMedium,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  Center(
-                    child: Text('Self-love', style: theme.textTheme.labelLarge),
-                  ),
-                  Center(
-                    child: Text('Science', style: theme.textTheme.labelLarge),
-                  ),
-                  Center(
-                    child: Text('Romance', style: theme.textTheme.labelLarge),
-                  ),
+                isScrollable: true,
+                tabs: const [
+                  Text('Novel', overflow: TextOverflow.ellipsis),
+                  Text('Self-love', overflow: TextOverflow.ellipsis),
+                  Text('Science', overflow: TextOverflow.ellipsis),
+                  Text('Romance', overflow: TextOverflow.ellipsis),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: Align(
-        alignment: AlignmentGeometry.bottomRight,
-        child: Container(
-          height: 70,
-          width: 70,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.redAccent,
+
+              SizedBox(height: 15.h),
+
+              // --- Add Category Button ---
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: GestureDetector(
+                  onTap: () => Get.to(UploadCategory()),
+                  child: CircleAvatar(
+                    backgroundColor: theme.colorScheme.secondaryContainer,
+                    child: Icon(
+                      Icons.add,
+                      color: theme.colorScheme.primaryContainer,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 15.h),
+
+              // --- TabBar View (Filtered Books) ---
+              SizedBox(
+                height: 600.h,
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    buildBookGrid('Novel', theme),
+                    buildBookGrid('Self-love', theme),
+                    buildBookGrid('Science', theme),
+                    buildBookGrid('Romance', theme),
+                  ],
+                ),
+              ),
+            ],
           ),
-          child: Icon(Icons.add, size: 70, color: Colors.white),
         ),
       ),
+
+      // --- Floating Action Button ---
+      floatingActionButton: Align(
+        alignment: Alignment.bottomRight,
+        child: GestureDetector(
+          onTap: () => Get.to(UploadsBooks()),
+          child: Container(
+            height: 70.h,
+            width: 70.w,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.redAccent,
+            ),
+            child: Icon(
+              Icons.add,
+              size: 45.h,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // --- Reusable Book Grid Function ---
+  Widget buildBookGrid(String category, ThemeData theme) {
+    final filteredBooks = data
+        .where((book) => book['category'] == category)
+        .toList();
+
+    if (filteredBooks.isEmpty) {
+      return Center(
+        child: Text(
+          'No books available in $category',
+          style: theme.textTheme.bodyMedium,
+        ),
+      );
+    }
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: filteredBooks.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.5,
+      ),
+      itemBuilder: (context, index) {
+        final book = filteredBooks[index];
+        return GestureDetector(
+          onTap: () => Get.to(
+            () => DetailScreen(),
+            arguments: {
+              'bookname': book['bookname'],
+              'image': book['image'],
+              'writerName': book['writerName'],
+            },
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(
+                  book['image'],
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.broken_image_outlined);
+                  },
+                ),
+              ),
+              Text(
+                book['bookname'],
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 70.w),
+                child: Text(
+                  book['writerName'],
+                  style: theme.textTheme.bodyMedium,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
