@@ -23,7 +23,7 @@ class _UploadsBooksState extends State<UploadsBooks> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(leading: const Icon(Icons.arrow_back)),
+      appBar: AppBar(backgroundColor: theme.colorScheme.primaryContainer),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.w),
         child: SingleChildScrollView(
@@ -34,8 +34,11 @@ class _UploadsBooksState extends State<UploadsBooks> {
                 'Book Thumbnail',
                 style: theme.textTheme.bodySmall!.copyWith(
                   color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
                 ),
               ),
+              SizedBox(height: 20.h),
               Container(
                 height: 200.h,
                 width: 440.w,
@@ -51,7 +54,10 @@ class _UploadsBooksState extends State<UploadsBooks> {
               SizedBox(height: 15.sp),
               Text(
                 'Book Category',
-                style: theme.textTheme.displayMedium!.copyWith(fontSize: 15.sp),
+                style: theme.textTheme.displayMedium!.copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 15.sp),
               DropdownButtonFormField<String>(
@@ -81,7 +87,10 @@ class _UploadsBooksState extends State<UploadsBooks> {
               SizedBox(height: 15.sp),
               Text(
                 'Book Price',
-                style: theme.textTheme.displayMedium!.copyWith(fontSize: 15.sp),
+                style: theme.textTheme.displayMedium!.copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 15.h),
               TextformFieldComponent(
@@ -91,7 +100,10 @@ class _UploadsBooksState extends State<UploadsBooks> {
               SizedBox(height: 15.h),
               Text(
                 'Book Title',
-                style: theme.textTheme.displayMedium!.copyWith(fontSize: 15.sp),
+                style: theme.textTheme.displayMedium!.copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 15.h),
               TextformFieldComponent(
@@ -101,15 +113,19 @@ class _UploadsBooksState extends State<UploadsBooks> {
               SizedBox(height: 15.h),
               Text(
                 'Book Overview',
-                style: theme.textTheme.displayMedium!.copyWith(fontSize: 15.sp),
+                style: theme.textTheme.displayMedium!.copyWith(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 15.h),
               TextformFieldComponent(
                 maxLines: 8,
                 controller: overviescontroller,
                 hintText:
-                    'The Catcher in the Rye is a novel by J. D. Salinger...',
+                    'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......',
               ),
+              SizedBox(height: 20.h),
             ],
           ),
         ),

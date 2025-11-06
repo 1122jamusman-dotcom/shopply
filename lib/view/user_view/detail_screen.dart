@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:shoply/utils/app_colors.dart';
+
+import 'package:shoply/view/auth_view/favourites_screen.dart';
+import 'package:shoply/view/user_view/preview_screen.dart';
+import 'package:shoply/widgets/button_component.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
@@ -20,23 +23,34 @@ class DetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: Image.network(
-                    arg['image'],
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.broken_image_outlined);
-                    },
+                  child: SizedBox(
+                    height: 300,
+                    width: 300,
+                    child: ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(20),
+                      child: Image.network(
+                        fit: BoxFit.fill,
+                        arg['image'],
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(Icons.broken_image_outlined);
+                        },
+                      ),
+                    ),
                   ),
                 ),
+                SizedBox(height: 10),
                 Center(
                   child: Text(
                     arg['bookname'],
                     style: theme.textTheme.titleSmall!.copyWith(
                       fontSize: 18.sp,
-                      color: Colors.black,
+                      color: theme.colorScheme.primary,
+
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+                SizedBox(height: 5),
 
                 Center(
                   child: Text(
@@ -53,7 +67,7 @@ class DetailScreen extends StatelessWidget {
                     'About The Author',
                     style: theme.textTheme.titleSmall!.copyWith(
                       fontSize: 18.sp,
-                      color: Colors.black,
+                      color: theme.colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -71,8 +85,9 @@ class DetailScreen extends StatelessWidget {
                   child: Text(
                     'Overview',
                     style: theme.textTheme.titleSmall!.copyWith(
-                      fontSize: 18,
-                      color: Colors.black,
+                      fontSize: 18.sp,
+                      color: theme.colorScheme.primary,
+
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -84,45 +99,27 @@ class DetailScreen extends StatelessWidget {
                     'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique...',
                   ),
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: 60.h),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  padding: EdgeInsets.symmetric(horizontal: 30.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 55,
-                        width: 173,
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.secondaryContainer,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Read Previews',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                      ButtonComponent(
+                        hinttext: 'Read Preview',
+                        ontap: () {
+                          Get.to(PreviewScreen());
+                        },
+                        width: 173.w,
                       ),
-
-                      Container(
-                        height: 55,
-                        width: 173,
-                        decoration: BoxDecoration(
-                          color: AppColors.textPrimary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Add to  favourite',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      GestureDetector(
+                        child: ButtonComponent(
+                          hinttext: 'Add To Favourite',
+                          ontap: () {
+                            Get.to(FavouritesScreen());
+                          },
+                          color: theme.colorScheme.primary,
+                          width: 173.w,
                         ),
                       ),
                     ],

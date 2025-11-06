@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:shoply/controller/feature_controller/category_controller.dart';
 
 import 'package:shoply/widgets/button_component.dart';
 import 'package:shoply/widgets/textformfield_component.dart';
@@ -12,8 +15,9 @@ class UploadCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final categoryController = Get.put(CategoryController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(backgroundColor: theme.colorScheme.primaryContainer),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.h),
@@ -35,10 +39,20 @@ class UploadCategory extends StatelessWidget {
               hintText: 'Novel',
             ),
             SizedBox(height: 500.h),
-            ButtonComponent(hinttext: 'Upload', ontap: () {}),
           ],
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ButtonComponent(
+          hinttext: 'Upload',
+          ontap: () async {
+            final String categrey = bookcontroller.text.trim();
+            categoryController.UploadCategory(categrey);
+          },
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

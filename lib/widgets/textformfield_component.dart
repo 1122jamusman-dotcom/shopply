@@ -1,43 +1,54 @@
 import 'package:flutter/material.dart';
-
 import 'package:shoply/utils/app_colors.dart';
 
 // ignore: must_be_immutable
 class TextformFieldComponent extends StatelessWidget {
   final TextEditingController controller;
-  IconData? prefixIcon;
-  int maxLines;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
+  final int maxLines;
   final String hintText;
-  IconData? suffixIcon;
-  TextformFieldComponent({
+  final bool enable;
+
+  const TextformFieldComponent({
     super.key,
     this.maxLines = 1,
     required this.controller,
     required this.hintText,
     this.prefixIcon,
     this.suffixIcon,
+    this.enable = true,
   });
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return TextFormField(
+      enabled: enable,
       maxLines: maxLines,
       controller: controller,
       decoration: InputDecoration(
-        prefixIcon: Icon(prefixIcon, color: theme.colorScheme.secondary),
-        suffixIcon: Icon(suffixIcon, color: theme.colorScheme.secondary),
+        prefixIcon: prefixIcon != null
+            ? Icon(prefixIcon, color: theme.colorScheme.secondary)
+            : null,
+        suffixIcon: suffixIcon != null
+            ? Icon(suffixIcon, color: theme.colorScheme.secondary)
+            : null,
         filled: true,
         fillColor: AppColors.background,
-        contentPadding: EdgeInsets.symmetric(horizontal: 2),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 14,
+        ),
         hintText: hintText,
         hintStyle: theme.textTheme.bodyLarge,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
+          borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent),
+          borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10),
         ),
       ),

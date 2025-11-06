@@ -10,36 +10,29 @@ class PreviewScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(leading: Icon(Icons.arrow_back)),
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.primaryContainer,
+        title: Text(
+          'Cather in the Rye',
+          style: theme.textTheme.titleMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.h),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 20.w),
-                      child: Icon(Icons.arrow_back),
-                    ),
-                    SizedBox(width: 70.w),
-                    Center(
-                      child: Text(
-                        'Catcher in the Rye',
-                        style: theme.textTheme.headlineMedium!.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 Text(
                   'JD Slinger',
                   style: theme.textTheme.headlineMedium!.copyWith(
                     fontSize: 16.sp,
                     color: AppColors.textSecondary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
 

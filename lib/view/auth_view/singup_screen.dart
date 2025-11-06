@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
-import 'package:shoply/controller/auth_controller.dart';
+
+import 'package:shoply/controller/feature_controller/auth_controller.dart';
 import 'package:shoply/utils/app_colors.dart';
 import 'package:shoply/utils/app_images.dart';
 import 'package:shoply/view/auth_view/login_screen.dart';
@@ -15,6 +16,7 @@ import 'package:shoply/widgets/textformfield_component.dart';
 class SingUpScreen extends StatefulWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   AuthController authController = AuthController();
   SingUpScreen({super.key});
 
@@ -38,7 +40,12 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 padding: EdgeInsets.only(left: 10.w),
                 child: Padding(
                   padding: EdgeInsets.only(top: 50.h),
-                  child: Text('Sing Up', style: theme.textTheme.displayMedium),
+                  child: Text(
+                    'Sing Up',
+                    style: theme.textTheme.headlineLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 10.h),
@@ -49,6 +56,13 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 ),
               ),
               SizedBox(height: 20.h),
+              TextformFieldComponent(
+                prefixIcon: Icons.person_2_outlined,
+                hintText: 'Name',
+                controller: widget.nameController,
+              ),
+              SizedBox(height: 20.h),
+
               TextformFieldComponent(
                 hintText: 'Email',
 
@@ -67,7 +81,17 @@ class _SingUpScreenState extends State<SingUpScreen> {
               SizedBox(height: 30.h),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ButtonComponent(hinttext: 'Signup', ontap: () {}),
+                child: ButtonComponent(
+                  hinttext: 'Signup',
+                  ontap: () {
+                    print('object');
+                    widget.authController.signup(
+                      widget.emailController.text.trim(),
+                      widget.passwordController.text.trim(),
+                      widget.nameController.text.trim(),
+                    );
+                  },
+                ),
               ),
               SizedBox(height: 20.h),
               Padding(
@@ -90,12 +114,12 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 40.h),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.h),
+                padding: EdgeInsets.symmetric(horizontal: 20.h),
                 child: Container(
                   height: 50.h,
-                  width: 360.w,
+                  width: double.infinity,
                   decoration: BoxDecoration(
                     color: AppColors.background,
                     borderRadius: BorderRadius.circular(10),
@@ -107,7 +131,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         padding: EdgeInsets.only(left: 10.h),
                         child: SvgPicture.asset(AppImages.googleLogo),
                       ),
-                      SizedBox(width: 80.w),
+                      SizedBox(width: 50.w),
                       Text(
                         'Sing in with Google',
                         style: theme.textTheme.titleSmall!.copyWith(
@@ -119,10 +143,10 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 200),
+              SizedBox(height: 220.h),
 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 130.h),
+                padding: EdgeInsets.symmetric(horizontal: 55.h),
                 child: Row(
                   children: [
                     Text('Already have an account?'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shoply/controller/auth_controller.dart';
+import 'package:shoply/controller/feature_controller/auth_controller.dart';
 
 import 'package:shoply/widgets/button_component.dart';
 import 'package:shoply/widgets/textformfield_component.dart';
@@ -30,7 +30,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               padding: EdgeInsets.only(left: 10.w, top: 50.h),
               child: Text(
                 'Forgot Password',
-                style: theme.textTheme.displayMedium,
+                style: theme.textTheme.headlineLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 10.h),
@@ -47,7 +49,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               prefixIcon: Icons.email_outlined,
             ),
             SizedBox(height: 20.h),
-            ButtonComponent(hinttext: 'Forgot', ontap: () {}),
+            ButtonComponent(
+              hinttext: 'Forgot',
+              ontap: () {
+                widget.authController.forgotpassword(
+                  widget.emailController.text.trim(),
+                );
+              },
+            ),
           ],
         ),
       ),

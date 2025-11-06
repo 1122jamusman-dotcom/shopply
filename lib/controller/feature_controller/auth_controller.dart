@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:shoply/controller/feature_controller/user_info_controler.dart';
 import 'package:shoply/view/auth_view/login_screen.dart';
 import 'package:shoply/view/auth_view/singup_screen.dart';
 import 'package:shoply/view/user_view/home_screen.dart';
@@ -8,15 +9,19 @@ import 'package:shoply/view/user_view/home_screen.dart';
 class AuthController extends GetxController {
   // signup
 
-  Future signup(String email, String password) async {
+  Future signup(String email, String password, String name) async {
     try {
-      EasyLoading.show();
-
+      /// signUp
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
+      UserInfoControler userInfoControler = Get.put(UserInfoControler());
+      EasyLoading.show();
+
+      /// Storing data
+      userInfoControler.storeUserInfo(name, email);
       Get.offAll(() => HomeScreen());
       //
     } catch (e) {
@@ -82,6 +87,7 @@ class AuthController extends GetxController {
       Get.off(SingUpScreen());
     } catch (e) {
       GetSnackBar(message: e.toString());
+      print(e.toString());
     } finally {
       EasyLoading.dismiss();
     }

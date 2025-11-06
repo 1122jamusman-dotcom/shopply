@@ -19,4 +19,5 @@ class AppImages {
   static String googleLogo = 'images/Frame 168.svg';
   static String book_6 =
       'https://i.pinimg.com/236x/ee/e5/28/eee5286f43ca6a20e5dd58a712b9f60d.jpg';
+  static String imageLogo = 'images/image107.svg';
 }
