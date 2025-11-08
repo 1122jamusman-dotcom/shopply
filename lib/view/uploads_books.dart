@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/instance_manager.dart';
+import 'package:get/utils.dart';
+import 'package:shoply/controllar/book_controller.dart';
 import 'package:shoply/utils/app_images.dart';
 import 'package:shoply/widget/butten_widget.dart';
 import 'package:shoply/widget/text_formfield_widget.dart';
@@ -15,6 +18,7 @@ class _UploadsBooksState extends State<UploadsBooks> {
   final TextEditingController titlecontroller = TextEditingController();
   final TextEditingController pricecontroller = TextEditingController();
   final TextEditingController overviescontroller = TextEditingController();
+  BookController bookControllerGetx = Get.put(BookController());
   String? selectedValue;
   final List<String> categoriesList = ['Novel', 'Stories', 'Study'];
   @override
@@ -113,7 +117,52 @@ class _UploadsBooksState extends State<UploadsBooks> {
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: ButtonWidget(hinttext: 'Upload', onTap: () {}),
+        child: ButtonWidget(
+          hinttext: 'Upload',
+          onTap: () {
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            print(
+              'WWOWOWOWOWOWOWOWOOWOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',
+            );
+            bookControllerGetx.uploadbook(
+              titlecontroller.text.trim(),
+              'author',
+              overviescontroller.text.trim(),
+              'https://miblart.com/wp-content/uploads/2024/01/main-3-1-scaled.jpg',
+              pricecontroller.text.trim(),
+              'category',
+              3.5,
+              5,
+              DateTime.now(),
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

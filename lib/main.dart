@@ -6,7 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:shoply/firebase_options.dart';
 import 'package:shoply/utils/dark_theme.dart';
 import 'package:shoply/utils/light_theme.dart';
-import 'package:shoply/view/auth_view/singup_screen.dart';
+import 'package:shoply/view/uploads_books.dart';
 import 'package:shoply/view/user_view/home_screen.dart';
 
 void main() async {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: ThemeMode.system,
-          home: SingUpScreen(),
+          home: HomeScreen(),
         );
       },
     );

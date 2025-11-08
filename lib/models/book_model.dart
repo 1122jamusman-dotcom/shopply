@@ -4,10 +4,10 @@ class BookModel {
   final String author;
   final String description;
   final String imageUrl;
-  final double price;
+  final String price;
   final String category;
-  final double rating;
-  final int pages;
+  final String rating;
+  final String pages;
   final DateTime publishedDate;
 
   BookModel({
@@ -47,9 +47,9 @@ class BookModel {
       author: map['author'] ?? '',
       description: map['description'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
-      price: (map['price'] ?? 0).toDouble(),
+      price: map['price'] ?? '',
       category: map['category'] ?? '',
-      rating: (map['rating'] ?? 0).toDouble(),
+      rating: map['rating'] ?? '',
       pages: map['pages'] ?? 0,
       publishedDate:
           DateTime.tryParse(map['publishedDate'] ?? '') ?? DateTime.now(),

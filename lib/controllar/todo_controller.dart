@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class TodoControllar extends GetxController {
   // List<TodoModel> todos = <TodoModel>[].obs;
